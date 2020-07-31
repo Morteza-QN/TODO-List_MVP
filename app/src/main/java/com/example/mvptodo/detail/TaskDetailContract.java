@@ -10,11 +10,15 @@ public interface TaskDetailContract {
         void showTask(Task task);
 
         void setVisibilityDeleteButton(boolean isVisible);
+
+        void showError(String error);
+
+        void returnResult(Task task, int resultCode);
     }
 
     interface Presenter extends BasePresenter<View> {
         void deleteTask(Task task);
 
-        void saveChanges(int important, String title);
+        void saveChanges(String title, int important);
     }
 }

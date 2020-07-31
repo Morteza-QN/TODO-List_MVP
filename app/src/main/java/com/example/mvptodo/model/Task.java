@@ -30,6 +30,14 @@ public class Task implements Parcelable {
 
     public Task() { }
 
+    public Task(String title, boolean isCompleted, int importance) {
+        this.title = title; this.isCompleted = isCompleted; this.importance = importance;
+    }
+
+    public Task(String title, int importance) {
+        this.title = title; this.importance = importance;
+    }
+
     protected Task(Parcel in) {
         this.id         = in.readLong(); this.title = in.readString(); this.isCompleted = in.readByte() != 0;
         this.importance = in.readInt();
