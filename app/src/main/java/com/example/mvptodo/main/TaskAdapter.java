@@ -27,27 +27,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private Drawable              lowImportantDrawable;
 
     public TaskAdapter(Context context, TaskItemEventListener eventListener) {
-
-        this.eventListener = eventListener;
-
-                                                                                                  highImportantDrawable   =
-                                                                                                          ResourcesCompat
-                                                                                                                  .getDrawable(
-                                                                                                                          context.getResources(),
-                                                                                                                          R.drawable.shape_importance_high_rect,
-                                                                                                                          null);
-                                                                                                  normalImportantDrawable =
-                                                                                                          ResourcesCompat
-                                                                                                                  .getDrawable(
-                                                                                                                          context.getResources(),
-                                                                                                                          R.drawable.shape_importance_normal_rect,
-                                                                                                                          null);
-                                                                                                  lowImportantDrawable    =
-                                                                                                          ResourcesCompat
-                                                                                                                  .getDrawable(
-                                                                                                                          context.getResources(),
-                                                                                                                          R.drawable.shape_importance_low_rect,
-                                                                                                                          null);
+        this.eventListener      = eventListener;
+        highImportantDrawable   =
+                ResourcesCompat.getDrawable(context.getResources(), R.drawable.shape_importance_high_rect, null);
+        normalImportantDrawable =
+                ResourcesCompat.getDrawable(context.getResources(), R.drawable.shape_importance_normal_rect, null);
+        lowImportantDrawable    =
+                ResourcesCompat.getDrawable(context.getResources(), R.drawable.shape_importance_low_rect, null);
     }
 
     @NonNull
@@ -67,41 +53,48 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public void addItem(Task task) {
-        tasks.add(0, task); notifyItemInserted(0);
+        tasks.add(0, task);
+        notifyItemInserted(0);
     }
 
     public void updateItem(Task task) {
         for (int i = 0; i < tasks.size(); i++) {
             if (task.getId() == tasks.get(i).getId()) {
-                tasks.set(i, task); notifyItemChanged(i);
+                tasks.set(i, task);
+                notifyItemChanged(i);
             }
         }
     }
 
     public void addItems(List<Task> tasks) {
-        this.tasks.addAll(tasks); notifyDataSetChanged();
+        this.tasks.addAll(tasks);
+        notifyDataSetChanged();
     }
 
     public void deleteItem(Task task) {
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getId() == task.getId()) {
-                tasks.remove(i); notifyItemRemoved(i); break;
+                tasks.remove(i);
+                notifyItemRemoved(i);
+                break;
             }
         }
     }
 
     public void clearItems() {
-        this.tasks.clear(); notifyDataSetChanged();
+        this.tasks.clear();
+        notifyDataSetChanged();
     }
 
     public void setTasks(List<Task> tasks) {
-        this.tasks = tasks; notifyDataSetChanged();
+        this.tasks = tasks;
+        notifyDataSetChanged();
     }
 
     public interface TaskItemEventListener {
-        void onClick(Task task);
+        void onClickItem(Task task);
 
-        void onLongClick(Task task);
+        void onLongClickItem(Task task);
     }
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -110,46 +103,47 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private View      importanceView;
 
         public TaskViewHolder(@NonNull View itemView) {
-            super(itemView); titleTv        = itemView.findViewById(R.id.taskCheckBox);
-                             checkBoxIv     = itemView.findViewById(R.id.checkBoxIv);
-                             importanceView = itemView.findViewById(R.id.importanceView);
+            super(itemView);
+            titleTv        = itemView.findViewById(R.id.taskCheckBox);
+            checkBoxIv     = itemView.findViewById(R.id.checkBoxIv);
+            importanceView = itemView.findViewById(R.id.importanceView);
         }
 
         public void bindTask(final Task task) {
-            titleTv.setText(task.getTitle()); if (task.isCompleted()) {
+            titleTv.setText(task.getTitle());
+            if (task.isCompleted()) {
                 checkBoxIv.setBackgroundResource(R.drawable.shape_checkbox_checked);
                 checkBoxIv.setImageResource(R.drawable.ic_check_white_24dp);
                 titleTv.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-
             }
             else {
-                checkBoxIv.setImageResource(0); checkBoxIv.setBackgroundResource(R.drawable.shape_checkbox_default);
+                checkBoxIv.setImageResource(0);
+                checkBoxIv.setBackgroundResource(R.drawable.shape_checkbox_default);
                 titleTv.setPaintFlags(0);
-
             }
-
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    eventListener.onLongClick(task); return false;
+                    eventListener.onLongClickItem(task);
+                    return false;
                 }
             });
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    eventListener.onClick(task);
+                    eventListener.onClickItem(task);
                 }
             });
-
-
             switch (task.getImportance()) {
                 case Task.IMPORTANCE_HIGH:
-                    importanceView.setBackground(highImportantDrawable); break;
+                    importanceView.setBackground(highImportantDrawable);
+                    break;
                 case Task.IMPORTANCE_LOW:
-                    importanceView.setBackground(lowImportantDrawable); break;
+                    importanceView.setBackground(lowImportantDrawable);
+                    break;
                 case Task.IMPORTANCE_NORMAL:
-                    importanceView.setBackground(normalImportantDrawable); break;
+                    importanceView.setBackground(normalImportantDrawable);
+                    break;
             }
         }
     }

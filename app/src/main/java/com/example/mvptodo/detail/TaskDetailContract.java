@@ -17,7 +17,7 @@ public interface TaskDetailContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void deleteTask(Task task);
+        void deleteTask();
 
         void saveChanges(String title, int important);
     }

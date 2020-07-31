@@ -13,6 +13,8 @@ import com.example.mvptodo.R;
 import com.example.mvptodo.main.MainActivity;
 import com.example.mvptodo.model.AppDatabase;
 import com.example.mvptodo.model.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class TaskDetailActivity extends AppCompatActivity implements TaskDetailContract.View {
@@ -20,34 +22,36 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     private ImageView                    lastSelectedImportanceIv;
     private TaskDetailContract.Presenter presenter;
     private EditText                     editText;
+    private View                         deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); setContentView(R.layout.activity_edit_task);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_task);
+        presenter = new TaskDetailPresenter(AppDatabase.getAppDatabase(this).getTaskDao(),
+                (Task) getIntent().getParcelableExtra(MainActivity.KEY_EXTRA_TASK));
 
-        init();
+        View backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        presenter = new TaskDetailPresenter(AppDatabase.getAppDatabase(this).getTaskDao()); presenter.onAttach(this);
-
-        editText = findViewById(R.id.taskEt); Button saveChangeBtn = findViewById(R.id.saveChangesBtn);
+        editText = findViewById(R.id.taskEt);
+        Button saveChangeBtn = findViewById(R.id.saveChangesBtn);
         saveChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.saveChanges(editText.getText().toString(), selectedImportance);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy(); presenter.onDetach();
-    }
-
-    private void init() {
-        View backBtn = findViewById(R.id.backBtn); backBtn.setOnClickListener(new View.OnClickListener() {
+        deleteBtn = findViewById(R.id.deleteTaskBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                presenter.deleteTask();
             }
         });
 
@@ -61,8 +65,9 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 if (selectedImportance != Task.IMPORTANCE_HIGH) {
                     lastSelectedImportanceIv.setImageResource(0);
                     ImageView imageView = v.findViewById(R.id.highImportanceCheckIv);
-                    imageView.setImageResource(R.drawable.ic_check_white_24dp); selectedImportance       =
-Task.IMPORTANCE_HIGH; lastSelectedImportanceIv                                                           = imageView;
+                    imageView.setImageResource(R.drawable.ic_check_white_24dp);
+                    selectedImportance       = Task.IMPORTANCE_HIGH;
+                    lastSelectedImportanceIv = imageView;
                 }
             }
         });
@@ -74,8 +79,8 @@ Task.IMPORTANCE_HIGH; lastSelectedImportanceIv                                  
                 if (selectedImportance != Task.IMPORTANCE_LOW) {
                     lastSelectedImportanceIv.setImageResource(0);
                     ImageView imageView = v.findViewById(R.id.lowImportanceCheckIv);
-                    imageView.setImageResource(R.drawable.ic_check_white_24dp); selectedImportance = Task.IMPORTANCE_LOW;
-
+                    imageView.setImageResource(R.drawable.ic_check_white_24dp);
+                    selectedImportance = Task.IMPORTANCE_LOW;
                     lastSelectedImportanceIv = imageView;
                 }
             }
@@ -87,32 +92,52 @@ Task.IMPORTANCE_HIGH; lastSelectedImportanceIv                                  
                 if (selectedImportance != Task.IMPORTANCE_NORMAL) {
                     lastSelectedImportanceIv.setImageResource(0);
                     ImageView imageView = v.findViewById(R.id.normalImportanceCheckIv);
-                    imageView.setImageResource(R.drawable.ic_check_white_24dp); selectedImportance = Task.IMPORTANCE_NORMAL;
-
+                    imageView.setImageResource(R.drawable.ic_check_white_24dp);
+                    selectedImportance = Task.IMPORTANCE_NORMAL;
                     lastSelectedImportanceIv = imageView;
                 }
             }
         });
+        presenter.onAttach(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
     }
 
     @Override
     public void showTask(Task task) {
-
+        editText.setText(task.getTitle());
+        switch (task.getImportance()) {
+            case Task.IMPORTANCE_HIGH:
+                findViewById(R.id.highImportanceBtn).performClick();
+                break;
+            case Task.IMPORTANCE_NORMAL:
+                findViewById(R.id.normalImportanceBtn).performClick();
+                break;
+            case Task.IMPORTANCE_LOW:
+                findViewById(R.id.lowImportanceBtn).performClick();
+                break;
+        }
     }
 
     @Override
     public void setVisibilityDeleteButton(boolean isVisible) {
-
+        deleteBtn.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showError(String error) {
-
+        Snackbar.make(findViewById(R.id.root_task_detail), error, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnResult(Task task, int resultCode) {
-        Intent intent = new Intent(); intent.putExtra(MainActivity.KEY_EXTRA_TASK, task); setResult(resultCode, intent);
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.KEY_EXTRA_TASK, task);
+        setResult(resultCode, intent);
         finish();
     }
 }

@@ -13,11 +13,7 @@ interface MainContract {
 
         void clearTasks();
 
-        void updateTasks();
-
-        void addTasks();
-
-        void deleteTasks();
+        void updateTasks(Task task);
 
         void setEmptyStateVisibility(boolean isVisible);
     }
@@ -25,10 +21,8 @@ interface MainContract {
     interface Presenter extends BasePresenter<View> {
         void onClickDeleteAllBtn();
 
-        List<Task> onSearch(String s);
+        void onSearch(String s);
 
-        void onClickTaskItem();
-
+        void onClickTaskItem(Task task);
     }
-
 }
