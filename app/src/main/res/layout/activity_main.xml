@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     xmlns:tools="http://schemas.android.com/tools"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     android:background="#F6FAFC"
-                                                     tools:context=".main.MainActivity">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FAFC"
+    tools:context=".main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -54,10 +55,7 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:textColor="@color/defaultTextColor"
-                android:textColorHint="@color/secondaryTextColor">
-
-            </EditText>
-
+                android:textColorHint="@color/secondaryTextColor" />
         </FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -65,16 +63,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:id="@+id/headerContainer"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:paddingStart="12dp"
-            android:visibility="visible"
-            android:paddingEnd="12dp">
+            android:paddingEnd="12dp"
+            android:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteAllBtn"
@@ -83,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:text="Delete All"
+                android:text="@string/delete_all"
                 android:textSize="12sp"
                 app:icon="@drawable/ic_delete_24dp"
                 app:iconSize="18dp" />
@@ -95,11 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="14dp"
-
                 android:paddingEnd="12dp"
-                android:text="Today">
-
-            </TextView>
+                android:text="@string/today" />
 
             <View
                 android:layout_width="wrap_content"
@@ -109,8 +103,6 @@
                 android:layout_alignBottom="@id/deleteAllBtn"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/shape_underline" />
-
-
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -122,7 +114,6 @@
             android:paddingTop="4dp"
             android:paddingEnd="12dp"
             android:paddingBottom="4dp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -130,10 +121,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="visible"
-        tools:visibility="visible"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="250dp"
@@ -142,14 +133,13 @@
             app:srcCompat="@drawable/empty_state" />
 
         <TextView
+            style="@style/p"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            style="@style/p"
-            android:textSize="16sp"
-            android:text="Try adding some tasks to see them here" />
+            android:text="@string/empty_state"
+            android:textSize="16sp" />
     </LinearLayout>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addNewTaskBtn"
@@ -159,10 +149,8 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="12dp"
         android:minHeight="65dp"
-        android:text="Add New Task"
+        android:text="@string/add_new_task"
         android:textAllCaps="true"
-        app:icon="@drawable/ic_add_24dp"
-
-        />
+        app:icon="@drawable/ic_add_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

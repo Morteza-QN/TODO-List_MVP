@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">mvp todo</string>
+    <string name="delete_all">Delete All</string>
+    <string name="today">Today</string>
+    <string name="empty_state">Try adding some tasks to see them here</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="title_edit_task">Edit Task</string>
+    <string name="high_btn">High</string>
+    <string name="normal_btn">Normal</string>
+    <string name="low_btn">Low</string>
+    <string name="hint_edit_task">Add a task for today...</string>
+    <string name="save_changes_btn">Save Changes</string>
 </resources>

@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
                 android:layout_toEndOf="@id/backBtn"
-                android:text="Edit Task" />
+                android:text="@string/title_edit_task" />
 
             <ImageView
                 android:id="@+id/deleteTaskBtn"
@@ -60,14 +60,15 @@
         android:layout_height="match_parent"
         android:layout_marginTop="12dp"
         android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:baselineAligned="true">
 
             <FrameLayout
                 android:id="@+id/highImportanceBtn"
@@ -83,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:text="High" />
+                    android:text="@string/high_btn" />
 
                 <ImageView
                     android:id="@+id/highImportanceCheckIv"
@@ -109,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:text="Normal" />
+                    android:text="@string/normal_btn" />
 
                 <ImageView
                     android:id="@+id/normalImportanceCheckIv"
@@ -135,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:text="Low" />
+                    android:text="@string/low_btn" />
 
                 <ImageView
                     android:id="@+id/lowImportanceCheckIv"
@@ -158,7 +159,7 @@
             android:layout_marginEnd="12dp"
             android:background="@null"
             android:gravity="top|start"
-            android:hint="Add a task for today..."
+            android:hint="@string/hint_edit_task"
             android:textColor="@color/defaultTextColor"
             android:textColorHint="@color/defaultTextColor"
             android:textSize="18sp" />
@@ -172,7 +173,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="12dp"
         android:minHeight="65dp"
-        android:text="Save Changes"
+        android:text="@string/save_changes_btn"
         android:textAllCaps="true"
         app:icon="@drawable/ic_circle_done_white_24dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

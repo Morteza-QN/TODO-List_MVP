@@ -10,12 +10,12 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase;
 
+    //singleton pattern
     public static AppDatabase getAppDatabase(Context context) {
         if (appDatabase == null) {
             appDatabase = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "db_app")
                               .allowMainThreadQueries().build();
         }
-
         return appDatabase;
     }
 
